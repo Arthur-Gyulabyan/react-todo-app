@@ -16,6 +16,8 @@
 .idea
 .prettierrc
 .eslintrc.js
+craco.config.js
+tailwind.config.js
 .env.local
 .env.development.local
 .env.test.local
