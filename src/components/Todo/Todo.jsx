@@ -1,5 +1,5 @@
 import React from 'react';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 import TodoItem from '../TodoItem/TodoItem';
 import Input from '../Input/Input';
 import getUniqueId from '../../helpers/idGenerator';
@@ -18,11 +18,14 @@ export default class Todo extends React.Component {
     if (e.key === 'Enter' || e.type === 'click') {
       const id = getUniqueId();
 
-      this.setState(prevState => {
-        return {
-          items: [...prevState.items, { text: currentText, id }],
-        };
-      });
+      if (currentText) {
+        this.setState(prevState => {
+          return {
+            items: [...prevState.items, { text: currentText, id }],
+            currentText: '',
+          };
+        });
+      }
     }
   };
 
@@ -32,9 +35,14 @@ export default class Todo extends React.Component {
 
   render() {
     const { items, currentText } = this.state;
+    const todoClassnames = classNames({
+      'w-1/3': true,
+      'p-5': true,
+      'bg-gray-300': true,
+    });
 
     return (
-      <div>
+      <div className={todoClassnames}>
         <Input
           placeholder="What you should do..."
           enterHandler={this.addItem}
