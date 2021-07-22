@@ -21,12 +21,44 @@ export default class Todo extends React.Component {
       if (currentText) {
         this.setState(prevState => {
           return {
-            items: [...prevState.items, { text: currentText, id }],
+            items: [
+              ...prevState.items,
+              { text: currentText, id, isCompleted: false },
+            ],
             currentText: '',
           };
         });
       }
     }
+  };
+
+  toggleComplete = (e, id) => {
+    const { items } = this.state;
+    const index = items.findIndex(el => el.id === id);
+    const newItems = items.filter(el => el.id !== id);
+
+    this.setState(prevState => {
+      return {
+        items: [
+          ...newItems,
+          {
+            ...prevState.items[index],
+            isCompleted: !prevState.items[index].isCompleted,
+          },
+        ],
+      };
+    });
+  };
+
+  deleteItem = (e, id) => {
+    const { items } = this.state;
+    const newItems = items.filter(el => el.id !== id);
+
+    this.setState(() => {
+      return {
+        items: newItems,
+      };
+    });
   };
 
   inputChangeHandler = e => {
@@ -51,7 +83,14 @@ export default class Todo extends React.Component {
         />
         <ul>
           {items.map(item => {
-            return <TodoItem text={item.text} key={item.id} />;
+            return (
+              <TodoItem
+                text={item.text}
+                key={item.id}
+                checkHandler={e => this.toggleComplete(e, item.id)}
+                deleteHandler={e => this.deleteItem(e, item.id)}
+              />
+            );
           })}
         </ul>
       </div>
