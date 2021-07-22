@@ -47,6 +47,7 @@
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.2.4",
     "autoprefixer": "^9.8.6",
+    "babel-loader": "8.1.0",
     "eslint": "^7.31.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "4.1.0",
