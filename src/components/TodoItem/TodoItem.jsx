@@ -10,8 +10,12 @@ export default function TodoItem({
   text,
   id,
   checkHandler,
+  editHandler,
+  editInputHandler,
+  editItem,
   deleteHandler,
   isCompleted,
+  isEditable,
 }) {
   const listItemClassnames = classNames(
     'flex',
@@ -29,7 +33,18 @@ export default function TodoItem({
 
   const listItemTextClassnames = classNames('text-2xl', {
     'line-through': isCompleted,
+    hidden: isEditable,
   });
+
+  const inputFieldClassnames = classNames(
+    'text-2xl',
+    'bg-gray-400',
+    'outline-none',
+    'w-full',
+    {
+      hidden: !isEditable,
+    },
+  );
 
   const checkButtonClassnames = classNames(
     'inline-block',
@@ -55,7 +70,23 @@ export default function TodoItem({
 
   return (
     <li className={listItemClassnames} id={id}>
-      <p className={listItemTextClassnames}>{text}</p>
+      <p
+        className={listItemTextClassnames}
+        title={text.length > 20 ? text : ''}>
+        {text.length > 20 ? `${text.slice(0, 20)}...` : text}
+      </p>
+
+      {isEditable ? (
+        <input
+          type="text"
+          defaultValue={text}
+          className={inputFieldClassnames}
+          onChange={editInputHandler}
+          onKeyPress={e => editItem(e, e.target.value)}
+          /* eslint-disable-next-line jsx-a11y/no-autofocus */
+          autoFocus
+        />
+      ) : null}
 
       <div className="flex items-center">
         <Button
@@ -63,7 +94,15 @@ export default function TodoItem({
           clickHandler={checkHandler}>
           <CheckIcon />
         </Button>
-        <Button btnClassNames={editButtonClassnames} clickHandler={() => {}}>
+        <Button
+          btnClassNames={editButtonClassnames}
+          clickHandler={
+            isEditable
+              ? e => {
+                  editItem(e);
+                }
+              : editHandler
+          }>
           <EditIcon />
         </Button>
         <Button
@@ -80,12 +119,17 @@ TodoItem.defaultProps = {
   text: 'Some text...',
   id: Date.now(),
   isCompleted: false,
+  isEditable: false,
 };
 
 TodoItem.propTypes = {
   text: PropTypes.string,
   id: PropTypes.number,
   checkHandler: PropTypes.func.isRequired,
+  editHandler: PropTypes.func.isRequired,
+  editInputHandler: PropTypes.func.isRequired,
+  editItem: PropTypes.func.isRequired,
   deleteHandler: PropTypes.func.isRequired,
   isCompleted: PropTypes.bool,
+  isEditable: PropTypes.bool,
 };
