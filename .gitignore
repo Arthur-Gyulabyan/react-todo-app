@@ -16,9 +16,6 @@
 .idea
 .prettierrc
 .eslintrc.js
-postcss.config.js
-package-lock.json
-tailwind.config.js
 .env.local
 .env.development.local
 .env.test.local
