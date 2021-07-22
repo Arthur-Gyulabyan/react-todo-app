@@ -18,7 +18,6 @@
 .eslintrc.js
 postcss.config.js
 package-lock.json
-craco.config.js
 tailwind.config.js
 .env.local
 .env.development.local
