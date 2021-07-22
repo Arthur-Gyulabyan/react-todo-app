@@ -35,19 +35,9 @@ export default class Todo extends React.Component {
   toggleComplete = (e, id) => {
     const { items } = this.state;
     const index = items.findIndex(el => el.id === id);
-    const newItems = items.filter(el => el.id !== id);
+    items[index].isCompleted = !items[index].isCompleted;
 
-    this.setState(prevState => {
-      return {
-        items: [
-          ...newItems,
-          {
-            ...prevState.items[index],
-            isCompleted: !prevState.items[index].isCompleted,
-          },
-        ],
-      };
-    });
+    this.setState({ items });
   };
 
   deleteItem = (e, id) => {
@@ -89,6 +79,7 @@ export default class Todo extends React.Component {
                 key={item.id}
                 checkHandler={e => this.toggleComplete(e, item.id)}
                 deleteHandler={e => this.deleteItem(e, item.id)}
+                isCompleted={item.isCompleted}
               />
             );
           })}
