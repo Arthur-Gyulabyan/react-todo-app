@@ -6,7 +6,13 @@ import { ReactComponent as EditIcon } from '../../assets/icons/edit-regular.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/trash-alt-regular.svg';
 import Button from '../Button/Button';
 
-export default function TodoItem({ text, id, checkHandler, deleteHandler }) {
+export default function TodoItem({
+  text,
+  id,
+  checkHandler,
+  deleteHandler,
+  isCompleted,
+}) {
   const listItemClassnames = classNames(
     'flex',
     'justify-between',
@@ -16,7 +22,14 @@ export default function TodoItem({ text, id, checkHandler, deleteHandler }) {
     'border-2',
     'border-green-500',
     'font-serif',
+    {
+      'shadow-inner': isCompleted,
+    },
   );
+
+  const listItemTextClassnames = classNames('text-2xl', {
+    'line-through': isCompleted,
+  });
 
   const checkButtonClassnames = classNames(
     'inline-block',
@@ -42,7 +55,7 @@ export default function TodoItem({ text, id, checkHandler, deleteHandler }) {
 
   return (
     <li className={listItemClassnames} id={id}>
-      <p className="text-2xl">{text}</p>
+      <p className={listItemTextClassnames}>{text}</p>
 
       <div className="flex items-center">
         <Button
@@ -66,6 +79,7 @@ export default function TodoItem({ text, id, checkHandler, deleteHandler }) {
 TodoItem.defaultProps = {
   text: 'Some text...',
   id: Date.now(),
+  isCompleted: false,
 };
 
 TodoItem.propTypes = {
@@ -73,4 +87,5 @@ TodoItem.propTypes = {
   id: PropTypes.number,
   checkHandler: PropTypes.func.isRequired,
   deleteHandler: PropTypes.func.isRequired,
+  isCompleted: PropTypes.bool,
 };
