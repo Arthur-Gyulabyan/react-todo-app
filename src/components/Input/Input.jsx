@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { ReactComponent as PlusIcon } from '../../assets/icons/plus-solid.svg';
 import Button from '../Button/Button';
 
@@ -54,3 +55,15 @@ export default function Input({
     </div>
   );
 }
+
+Input.defaultProps = {
+  placeholder: 'Some text...',
+  currenText: 'Some text...',
+};
+
+Input.propTypes = {
+  placeholder: PropTypes.string,
+  enterHandler: PropTypes.func.isRequired,
+  currenText: PropTypes.string,
+  changeHandler: PropTypes.func.isRequired,
+};

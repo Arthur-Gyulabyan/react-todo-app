@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 export default function Button({ children, btnClassNames, clickHandler }) {
   return (
@@ -8,3 +8,13 @@ export default function Button({ children, btnClassNames, clickHandler }) {
     </button>
   );
 }
+
+Button.defaultProps = {
+  btnClassNames: '',
+};
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  btnClassNames: PropTypes.string,
+  clickHandler: PropTypes.func.isRequired,
+};

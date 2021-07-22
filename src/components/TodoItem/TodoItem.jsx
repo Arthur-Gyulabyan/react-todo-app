@@ -1,11 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { ReactComponent as CheckIcon } from '../../assets/icons/check-double-solid.svg';
 import { ReactComponent as EditIcon } from '../../assets/icons/edit-regular.svg';
 import { ReactComponent as DeleteIcon } from '../../assets/icons/trash-alt-regular.svg';
 import Button from '../Button/Button';
 
-export default function TodoItem({ text, id }) {
+export default function TodoItem({ text, id, checkHandler, deleteHandler }) {
   const listItemClassnames = classNames(
     'flex',
     'justify-between',
@@ -44,16 +45,32 @@ export default function TodoItem({ text, id }) {
       <p className="text-2xl">{text}</p>
 
       <div className="flex items-center">
-        <Button btnClassNames={checkButtonClassnames}>
+        <Button
+          btnClassNames={checkButtonClassnames}
+          clickHandler={checkHandler}>
           <CheckIcon />
         </Button>
-        <Button btnClassNames={editButtonClassnames}>
+        <Button btnClassNames={editButtonClassnames} clickHandler={() => {}}>
           <EditIcon />
         </Button>
-        <Button btnClassNames={deleteButtonClassnames}>
+        <Button
+          btnClassNames={deleteButtonClassnames}
+          clickHandler={deleteHandler}>
           <DeleteIcon />
         </Button>
       </div>
     </li>
   );
 }
+
+TodoItem.defaultProps = {
+  text: 'Some text...',
+  id: Date.now(),
+};
+
+TodoItem.propTypes = {
+  text: PropTypes.string,
+  id: PropTypes.number,
+  checkHandler: PropTypes.func.isRequired,
+  deleteHandler: PropTypes.func.isRequired,
+};
